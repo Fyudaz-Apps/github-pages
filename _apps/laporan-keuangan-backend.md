@@ -90,8 +90,8 @@ The application is configured to run in the background using PM2.
 
 ## Documentation
 
-For more detailed information, check the `doc/` directory:
-* [Architecture Overview](./doc/architecture.md)
-* [API Reference](./doc/api.md)
-* [Interactive API Docs (Scalar)](/swagger)
-* [Database Schema](./doc/database.md)
+For more detailed information, see the documentation in the source repository:
+* [Architecture Overview](https://github.com/Fyudaz-Apps/laporan-keuangan-backend/blob/main/doc/architecture.md)
+* [API Reference](https://github.com/Fyudaz-Apps/laporan-keuangan-backend/blob/main/doc/api.md)
+* [Database Schema](https://github.com/Fyudaz-Apps/laporan-keuangan-backend/blob/main/doc/database.md)
+* [Source Repository](https://github.com/Fyudaz-Apps/laporan-keuangan-backend)

@@ -1,0 +1,27 @@
+# IT Software Development Portal Configuration
+title: IT Software Development Portal
+description: Centralized developer portal for SOPs, microservices documentation, and systems monitoring.
+url: "" # Will be configured for GitHub Pages domain
+
+# Collections definitions
+collections:
+  sop:
+    output: true
+    permalink: /sop/:path/
+  apps:
+    output: true
+    permalink: /apps/:path/
+
+# Markdown engine configuration
+markdown: kramdown
+highlighter: rouge
+
+# Excludes
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
+  - .github/workflows/sync-example.yml # Exclude the sample workflow file from jekyll build
+  - _sop/*.docx
+

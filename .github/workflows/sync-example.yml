@@ -1,0 +1,87 @@
+# GitHub Actions Workflow: Documentation Sync Example
+#
+# PLACE THIS FILE INSIDE: [your-other-service-repo]/.github/workflows/sync-documentation.yml
+#
+# Purpose:
+# Whenever a push occurs on the main/master branch of an application repository,
+# this workflow runs, generates the required Jekyll Front-Matter header for the README.md,
+# renames it, and pushes it directly into the `_apps/` collection of the Portal Repository.
+
+name: Sync Documentation to Portal
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'README.md' # Only trigger when documentation changes
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+jobs:
+  sync-docs:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the application repository code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Prepend Jekyll Front-Matter metadata to README.md
+      - name: Prepare Markdown with Jekyll Front-Matter
+        run: |
+          # Fetch the repository name dynamically
+          REPO_NAME="${{ github.event.repository.name }}"
+          
+          # Generate a human-readable title (replace dashes/underscores with spaces and capitalize)
+          HUMAN_TITLE=$(echo "$REPO_NAME" | sed 's/[-_]/ /g' | awk '{for(i=1;i<=NF;i++)sub(/./,toupper(substr($i,1,1)),$i)}1')
+          
+          # Get current date in YYYY-MM-DD
+          CURRENT_DATE=$(date +'%Y-%m-%d')
+          
+          # Fetch description from repository details (or fallback if empty)
+          REPO_DESC="${{ github.event.repository.description }}"
+          if [ -z "$REPO_DESC" ]; then
+            REPO_DESC="Technical specifications and developer guide for $REPO_NAME."
+          fi
+
+          # Output Front Matter headers to a temporary file
+          echo "---" > temp_readme.md
+          echo "layout: default" >> temp_readme.md
+          echo "title: $HUMAN_TITLE" >> temp_readme.md
+          echo "description: $REPO_DESC" >> temp_readme.md
+          echo "repo_name: $REPO_NAME" >> temp_readme.md
+          echo "status: active" >> temp_readme.md
+          echo "version: 1.0.0" >> temp_readme.md # Can be extracted dynamically from package.json or git tags if preferred
+          echo "author: Automated Sync" >> temp_readme.md
+          echo "last_updated: \"$CURRENT_DATE\"" >> temp_readme.md
+          echo "---" >> temp_readme.md
+          echo "" >> temp_readme.md
+          
+          # Append the actual README.md content to the file
+          cat README.md >> temp_readme.md
+          
+          # Save it to the target file name
+          # Using format: [repo-name].md
+          mv temp_readme.md "${REPO_NAME}.md"
+          
+          echo "Prepared documentation file: ${REPO_NAME}.md"
+
+      # Step 3: Copy the generated file into the portal repository's _apps directory
+      # Requirements:
+      # You need to create a Personal Access Token (PAT) with "repo" write access on the destination repository,
+      # and save it in the secrets of this SOURCE repository under the name: SYNC_PORTAL_TOKEN.
+      - name: Push File to Portal Repository
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.SYNC_PORTAL_TOKEN }}
+        with:
+          source_file: '${{ github.event.repository.name }}.md'
+          
+          # CHANGE THESE VALUE TO YOUR ORG/USERNAME AND PORTAL REPOSITORY NAME:
+          destination_repo: 'Fyudaz-Apps/github-pages' 
+          destination_folder: '_apps'
+          
+          # Committer Configuration
+          user_email: 'devops-docs-bot@example.com'
+          user_name: 'DevOps Documentation Sync Bot'
+          commit_message: 'docs: auto-sync README from ${{ github.event.repository.name }}'

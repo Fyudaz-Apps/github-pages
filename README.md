@@ -8,8 +8,9 @@ A centralized static documentation and service monitoring portal built with [Jek
 
 1. **Global SOPs:** A dedicated space in the repository (`_sop/`) to write development team Standard Operating Procedures in Markdown.
 2. **App Documentations:** A collection (`_apps/`) that dynamically integrates documentation (e.g. README files) synced from other separate service repositories.
-3. **Uptime Kuma Monitoring:** Integrated, responsive status dashboard displaying live microservice availability using a secure borderless iframe.
-4. **Developer-First Design:** Fully custom CSS styling featuring a modern dark theme, hover micro-animations, glassmorphism headers, responsive grids, status badges, and syntax-highlighted code blocks.
+3. **Uptime Kuma Monitoring:** Integrated status page link to access live microservice availability dashboard.
+4. **Project Task Monitoring:** Quick access links to the GitHub Projects task board directly from individual application cards and homepage.
+5. **Developer-First Design:** Fully custom CSS styling featuring a modern dark theme, hover micro-animations, glassmorphism headers, responsive grids, status badges, and syntax-highlighted code blocks.
 
 ---
 
@@ -18,21 +19,46 @@ A centralized static documentation and service monitoring portal built with [Jek
 ```text
 ├── .github/
 │   └── workflows/
+│       ├── deploy.yml               # Automatic deployment to GitHub Pages
 │       └── sync-example.yml         # GitHub Actions template to use in OTHER repos for doc syncing
 ├── _apps/
-│   └── sample-backend-service.md    # Simulates synced backend service README
+│   ├── laporan-keuangan-backend.md  # Synced backend bot documentation
+│   ├── laporan-keuangan-webserver.md# Synced react dashboard documentation
+│   └── v0-karate-var-app.md         # Synced v0 app deployment documentation
 ├── _config.yml                      # Jekyll website configuration (collections, metadata, permalinks)
 ├── _layouts/
 │   └── default.html                 # Main layout template (navbar, footer, logic structures)
 ├── _sop/
-│   └── sop-deployment-flow.md       # Sample deployment Standard Operating Procedure
+│   ├── SOP Software Development Life Cycle.md
+│   ├── SOP Template Backend v2 Bun.md
+│   └── SOP Template Frontend v2.md
 ├── assets/
 │   └── css/
 │       └── style.css                # Premium vanilla CSS styling variables, layout, typography
-├── Gemfile                          # Bundler dependencies for local development
 ├── index.md                         # Portal Home Dashboard (automated collection loops)
-└── monitoring.md                    # Service Status page (Uptime Kuma iframe integration)
+├── monitoring.md                    # Service Status monitoring page
+├── setup-portal.ps1                 # Windows setup wizard (PowerShell)
+└── setup-portal.sh                  # Linux/Mac setup wizard (Bash)
 ```
+
+---
+
+## ⚙️ Setup on Other GitHub Accounts
+
+We provide interactive setup scripts to quickly configure and deploy this portal on another GitHub account:
+
+### On Windows (PowerShell)
+```powershell
+.\setup-portal.ps1
+```
+
+### On Linux / macOS (Bash)
+```bash
+chmod +x setup-portal.sh
+./setup-portal.sh
+```
+
+These scripts will guide you through updating the configuration files (`_config.yml`), updating repository links, and setting up the Uptime Kuma and Project Board targets.
 
 ---
 

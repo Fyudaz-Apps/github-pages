@@ -7,6 +7,7 @@ status: active
 version: 1.0.0
 author: Fyudaz-Apps
 last_updated: "2026-05-19"
+project_url: https://github.com/users/fahmiyuda31/projects/7
 ---
 
 # Laporan Keuangan Webserver

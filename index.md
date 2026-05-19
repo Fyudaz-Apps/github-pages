@@ -118,6 +118,14 @@ permalink: /
               <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
             </svg>
           </a>
+          {% if item.project_url %}
+          <a href="{{ item.project_url }}" target="_blank" rel="noopener noreferrer" class="card-link" style="margin-top: 0.25rem; color: var(--accent-secondary, var(--primary)); font-size: 0.85rem;">
+            📋 Project Board
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 14px; height: 14px;">
+              <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7z"/>
+            </svg>
+          </a>
+          {% endif %}
         </div>
       {% endfor %}
     {% else %}
@@ -125,5 +133,39 @@ permalink: /
         <p style="margin: 0; color: var(--text-muted);">No application documents found in the <code>_apps/</code> collection.</p>
       </div>
     {% endif %}
+  </div>
+</section>
+
+<!-- Project Management Section -->
+<section id="projects" style="margin-bottom: 3.5rem; scroll-margin-top: 80px;">
+  <h2>Project Management & Task Monitoring</h2>
+  <p>Track project progress, task assignments, and team member workload through our centralized GitHub Project board.</p>
+
+  <div class="card-grid" style="grid-template-columns: 1fr;">
+    <div class="card" style="padding: 2rem;">
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        <div>
+          <h3 style="margin: 0; color: var(--text-primary);">Laporan Keuangan — Development Board</h3>
+          <p style="margin: 0.25rem 0 0; font-size: 0.9rem; color: var(--text-secondary);">Kanban-style project board tracking all tasks, bugs, and feature requests across Backend & Frontend.</p>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.25rem;">
+        <span class="badge badge-primary" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">📌 Task Tracking</span>
+        <span class="badge badge-success" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">👥 Team Assignments</span>
+        <span class="badge badge-warning" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">📊 Sprint Progress</span>
+      </div>
+      <a href="https://github.com/users/fahmiyuda31/projects/7" target="_blank" rel="noopener noreferrer" class="card-link">
+        Open Project Board
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width: 16px; height: 16px;">
+          <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7z"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </section>

@@ -103,21 +103,49 @@
   </footer>
 
   <script>
-    // Active link highlighting fallback & smooth scroll
+    // Active link highlighting on scroll & click
     document.addEventListener('DOMContentLoaded', () => {
-      const currentPath = window.location.pathname;
-      const hash = window.location.hash;
       const navLinks = document.querySelectorAll('.nav-link');
+      const sections = document.querySelectorAll('section[id]');
+      const isHome = window.location.pathname === '{{ "/" | relative_url }}' || window.location.pathname === '/';
       
-      navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href.includes('#') && hash) {
-          if (href.endsWith(hash)) {
-            navLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
+      function updateActiveMenu() {
+        if (!isHome) return;
+        
+        let currentId = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          if (window.scrollY >= sectionTop - 150) {
+            currentId = '#' + section.getAttribute('id');
           }
+        });
+
+        navLinks.forEach(l => l.classList.remove('active'));
+        
+        if (currentId) {
+          navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.endsWith(currentId)) {
+              link.classList.add('active');
+            }
+          });
+        } else {
+          // At the top of home page
+          navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            // Prevent exact matching from overriding hash links if href only has /
+            if ((href === '{{ "/" | relative_url }}' || href === '/') && !link.getAttribute('href').includes('#')) {
+              link.classList.add('active');
+            }
+          });
         }
-      });
+      }
+
+      if (isHome) {
+        window.addEventListener('scroll', updateActiveMenu);
+        window.addEventListener('hashchange', () => setTimeout(updateActiveMenu, 50));
+        setTimeout(updateActiveMenu, 100);
+      }
     });
   </script>
 </body>

@@ -80,6 +80,7 @@ jobs:
           # CHANGE THESE VALUE TO YOUR ORG/USERNAME AND PORTAL REPOSITORY NAME:
           destination_repo: 'Fyudaz-Apps/github-pages' 
           destination_folder: '_apps'
+          destination_branch: 'master'
           
           # Committer Configuration
           user_email: 'devops-docs-bot@example.com'

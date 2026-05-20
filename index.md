@@ -99,7 +99,7 @@ permalink: /
           </div>
           <div class="card-meta">
             {% if item.repo_name %}
-              <span>Repo: <code>{{ item.repo_name }}</code></span>
+              <span>Repo: <a href="https://github.com/Fyudaz-Apps/{{ item.repo_name }}" target="_blank" rel="noopener noreferrer"><code>{{ item.repo_name }}</code></a></span>
             {% endif %}
             {% if item.version %}
               <span>v{{ item.version }}</span>
